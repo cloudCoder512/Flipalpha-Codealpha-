@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - FlipAlpha</title>
+    <link rel="stylesheet" href="./assets/css/style-prefix.css">
+    <link rel="stylesheet" href="../assets/css/check_out.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link rel="shortcut icon" href="./assets/images/logo/favicon.png" type="image/x-icon">
+    <script src="../assets/js/check_out.js" defer></script>
+</head>
+<body>
+<div class="checkout-container">
+    <div class="checkout-header">
+        <h1>Checkout</h1>
+        <p>Complete your purchase</p>
+    </div>
+    <div class="checkout-grid">
+        <!-- LEFT SIDE: ADDRESS SECTION -->
+        <div class="address-section">
+            <div class="address-tabs">
+                <button class="address-tab active" onclick="showAddressForm('billing')">Billing Address</button>
+                <button class="address-tab" onclick="showAddressForm('shipping')">Shipping Address</button>
+            </div>
+            <!-- Billing Address Form -->
+            <div id="billingAddressForm">
+                <h2 class="section-title">Billing Information</h2>
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="billFullName" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" id="billEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number *</label>
+                    <input type="tel" id="billMobile" required placeholder="10-digit mobile number">
+                </div>
+                <div class="form-group">
+                    <label>Address *</label>
+                    <textarea id="billAddress" rows="2" required placeholder="House No., Building, Street, Area"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City *</label>
+                        <input type="text" id="billCity" required placeholder="City">
+                    </div>
+                    <div class="form-group">
+                        <label>State *</label>
+                        <input type="text" id="billState" required placeholder="State">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Pincode *</label>
+                        <input type="text" id="billPincode" required placeholder="Pincode">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" id="billCountry" value="India" placeholder="Country">
+                    </div>
+                </div>
+            </div>
+            <!-- Shipping Address Form (Hidden by default) -->
+            <div id="shippingAddressForm" style="display: none;">
+                <h2 class="section-title">Shipping Information</h2>
+                <div class="same-as-billing">
+                    <input type="checkbox" id="sameAsBilling" onchange="toggleShippingAddress()">
+                    <label>Same as billing address</label>
+                </div>
+                <div id="shippingFields">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" id="shipFullName" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number *</label>
+                        <input type="tel" id="shipMobile" placeholder="10-digit mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label>Address *</label>
+                        <textarea id="shipAddress" rows="2" placeholder="House No., Building, Street, Area"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>City *</label>
+                            <input type="text" id="shipCity" placeholder="City">
+                        </div>
+                        <div class="form-group">
+                            <label>State *</label>
+                            <input type="text" id="shipState" placeholder="State">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Pincode *</label>
+                            <input type="text" id="shipPincode" placeholder="Pincode">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- RIGHT SIDE: CART SECTION -->
+        <div class="cart-section">
+            <h2 class="section-title">Your Cart</h2>
+            <div id="cartItemsList" class="cart-items">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="price-details">
+                <div class="price-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="price-row">
+                    <span>Shipping</span>
+                    <span id="shipping">$0.00</span>
+                </div>
+                <div class="price-row">
+                    <span>Tax (GST)</span>
+                    <span id="tax">$0.00</span>
+                </div>
+                <div class="price-row total">
+                    <span>Total Amount</span>
+                    <span id="totalAmount">$0.00</span>
+                </div>
+            </div>
+            <div class="payment-methods">
+                <h3 style="margin-bottom: 15px; font-size: 16px;">Payment Method</h3>
+                <div class="payment-option selected" onclick="selectPayment('cod')">
+                    <input type="radio" name="payment" value="cod" checked> 
+                    <label>Cash on Delivery</label>
+                </div>
+                <div class="payment-option" onclick="selectPayment('card')">
+                    <input type="radio" name="payment" value="card"> 
+                    <label>Credit/Debit Card</label>
+                </div>
+                <div class="payment-option" onclick="selectPayment('upi')">
+                    <input type="radio" name="payment" value="upi"> 
+                    <label>UPI / Net Banking</label>
+                </div>
+            </div>
+            <button class="place-order-btn" onclick="placeOrder()">Place Order ✓</button>
+            <a href="../index.html" class="back-to-cart">← Continue Shopping</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
